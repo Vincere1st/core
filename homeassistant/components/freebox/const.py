@@ -16,13 +16,14 @@ APP_DESC = {
     "app_version": "0.106",
     "device_name": socket.gethostname(),
 }
-API_VERSION = "v6"
+API_VERSION = "v8"
 
 PLATFORMS = [
     Platform.ALARM_CONTROL_PANEL,
     Platform.BINARY_SENSOR,
     Platform.BUTTON,
     Platform.CAMERA,
+    Platform.COVER,
     Platform.DEVICE_TRACKER,
     Platform.SENSOR,
     Platform.SWITCH,
@@ -37,8 +38,12 @@ STORAGE_VERSION = 1
 
 CONNECTION_SENSORS_KEYS = {"rate_down", "rate_up"}
 
+# default value
+VALUE_NOT_SET = -1
+
 # Icons
 DEVICE_ICONS = {
+    "cover": "mdi:window-shutter",
     "freebox_delta": "mdi:television-guide",
     "freebox_hd": "mdi:television-guide",
     "freebox_mini": "mdi:television-guide",
@@ -73,6 +78,7 @@ class FreeboxHomeCategory(enum.StrEnum):
     OPENER = "opener"
     PIR = "pir"
     RTS = "rts"
+    SHUTTER = "basic_shutter"
 
 
 CATEGORY_TO_MODEL = {
@@ -93,4 +99,5 @@ HOME_COMPATIBLE_CATEGORIES = [
     FreeboxHomeCategory.KFB,
     FreeboxHomeCategory.PIR,
     FreeboxHomeCategory.RTS,
+    FreeboxHomeCategory.SHUTTER,
 ]

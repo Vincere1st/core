@@ -11,7 +11,7 @@ from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 from homeassistant.helpers.entity import Entity
 
-from .const import CATEGORY_TO_MODEL, DOMAIN, FreeboxHomeCategory
+from .const import CATEGORY_TO_MODEL, DOMAIN, VALUE_NOT_SET, FreeboxHomeCategory
 from .router import FreeboxRouter
 
 _LOGGER = logging.getLogger(__name__)
@@ -149,3 +149,16 @@ class FreeboxHomeEntity(Entity):
             )
             return None
         return node.get("value")
+
+    def get_node_value(self, nodes, ep_type, name):
+        """Get the node value."""
+        node = next(
+            filter(lambda x: (x["name"] == name and x["ep_type"] == ep_type), nodes),
+            None,
+        )
+        if node is None:
+            _LOGGER.warning(
+                "The Freebox Home device has no value for: %s/%s", ep_type, name
+            )
+            return VALUE_NOT_SET
+        return node.get("value", VALUE_NOT_SET)

@@ -267,6 +267,16 @@ class FreeboxRouter:
         with suppress(NotOpenError):
             await self._api.close()
 
+    async def set_home_endpoint_value(self, node_id, endpoint_id, value) -> bool:
+        """Set Home endpoint value."""
+        if node_id is None:
+            _LOGGER.error("Unable to SET a value through the API. node_id is None")
+            return False
+        await self._api.home.set_home_endpoint_value(
+            node_id, endpoint_id, {"value": value}
+        )
+        return True
+
     @property
     def device_info(self) -> DeviceInfo:
         """Return the device information."""
